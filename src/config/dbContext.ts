@@ -6,15 +6,18 @@ export class DbContext {
         if (object) {
             createConnection(object).then(async connection => {
                 this.dbConnection = await connection;
+                console.log('options ',connection)
             })
         }else{
             createConnection().then(async connection => {
                 this.dbConnection = await connection;
+                console.log('xxx ',connection)
             })
         }
     }
 
-    public  get connection() {
+    public get connection() {
+        console.log('aaa ',this.dbConnection)
         return this.dbConnection;
     }
 }
