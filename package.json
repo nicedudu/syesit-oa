@@ -1,7 +1,7 @@
 {
-  "name": "nest-typescript-starter",
+  "name": "Syesit OA",
   "version": "1.0.0",
-  "description": "Nest TypeScript starter repository",
+  "description": "Syesit OA",
   "license": "MIT",
   "scripts": {
     "start": "node index.js",

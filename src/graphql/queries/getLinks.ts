@@ -1,7 +1,7 @@
 import linkType from '../types/link.type';
 import { GraphQLList, GraphQLString } from 'graphql';
 
-const links = [
+export const links = [
     {
         id: 1,
         url: 'http://graphql.org/',
