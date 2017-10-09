@@ -21,7 +21,7 @@ photo.description = "I am near polar bears";
 photo.filename = "photo-with-bears.jpg";
 photo.views = 1;
 photo.isPublished = true;
-await connection.manager.save(photo);
+// await connection.manager.save(photo);
 // Create a photo metadata
 let metadata = new PhotoMetadata();
 metadata.height = 640;
@@ -30,7 +30,7 @@ metadata.compressed = true;
 metadata.comment = "cybershoot";
 metadata.orientation = "portait";
 metadata.photo = photo; // this way we connect them
-await connection.manager.save(metadata);
+// await connection.manager.save(metadata);
 
 let user = new User();
 user.email = '592026320@qq.com';
@@ -39,7 +39,7 @@ user.lastName = 'fr';
 user.createAt = '2017-10-06';
 user.updatedAt = '2017-10-06';
 user.deletedAt = '2017-10-06';
-await connection.manager.save(metadata);
+// await connection.manager.save(metadata);
 
 console.log("Metadata is saved, and relation between metadata and photo is created in the database too");
 }).catch(error => console.log(error));

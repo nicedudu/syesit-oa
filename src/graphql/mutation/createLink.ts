@@ -7,7 +7,7 @@ import { links } from '../queries/getLinks';
 
 export const createLink = {
     CreateLink:{
-        type:new GraphQLList(linkType),
+        type:linkType,
         args:{
             url: {
                 type:new GraphQLNonNull(GraphQLString)
@@ -16,10 +16,13 @@ export const createLink = {
                 type:new GraphQLNonNull(GraphQLString)
             }
         },
-        resolve:(source) => {
-            // const newLink = Object.assign({ id: links.length + 1 }, source);
-            // links.push(newLink);
-            return "Hello";
+        resolve:(_, data) => {
+            const newLink = Object.assign({ id: links.length + 1 }, data);
+            console.log(data)
+            newLink.url = data.url;
+            newLink.description = data.description;
+            links.push(newLink);
+            return newLink;
         }
     }
 } 
