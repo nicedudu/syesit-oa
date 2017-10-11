@@ -8,7 +8,7 @@
     "database": "testORM",
     "synchronize": true,
     "entities": [
-        "src/entity/*.ts"
+        "src/entity/**/*.entity.ts"
     ],
     "subscribers": [
         "src/subscriber/*.ts"
