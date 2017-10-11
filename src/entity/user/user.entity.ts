@@ -9,6 +9,8 @@ export class User {
         mobilePhone: string,
         avatar: string,
         createAt: string,
+        token: string,
+        deadline: string,
         isActive: boolean,
         isDeleted: boolean) {
         this.email = email;
@@ -17,6 +19,8 @@ export class User {
         this.mobilePhone = mobilePhone;
         this.avatar = avatar;
         this.createAt = createAt;
+        this.token = token;
+        this.deadline = deadline;
         this.isActive = isActive;
         this.isDeleted = isDeleted;
     }
@@ -43,13 +47,13 @@ export class User {
     createAt: string;
 
     @Column()
-    token?: string | undefined;
+    token: string;
 
     @Column()
-    deadline?: string | undefined;
+    deadline: string;
 
     @Column()
-    isActive?: boolean | undefined;
+    isActive: boolean;
 
     @Column()
     isDeleted: boolean;
