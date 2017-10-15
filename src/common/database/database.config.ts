@@ -6,17 +6,17 @@ import { ConnectionOptions } from 'typeorm';
  * 
  * @export
  * @abstract
- * @class TypeOrmDatabaseConfig
+ * @class DatabaseConfig
  */
 @Component()
-export abstract class TypeOrmDatabaseConfig {
+export abstract class DatabaseConfig {
 
     /**
      * 
      * 
      * @abstract
      * @returns {ConnectionOptions} 
-     * @memberof TypeOrmDatabaseConfig
+     * @memberof DatabaseConfig
      */
     abstract getConfiguration(): ConnectionOptions;
 }

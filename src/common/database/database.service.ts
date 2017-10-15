@@ -1,51 +1,63 @@
 import { Component } from '@nestjs/common';
-import { Repository, ObjectType } from 'typeorm';
-import { IService } from './interface/service.interface';
-import { TypeOrmDatabaseService } from './typeOrm.database.service';
-import { Observable } from 'rxjs/Observable';
+import { createConnection, Connection, EntityManager, Repository, ObjectType, getConnection } from 'typeorm';
+import { DatabaseConfig } from './database.config';
 
-export abstract class DatabaseService<T> implements IService<T>{
-    private databaseService: TypeOrmDatabaseService;
-    private entity: { new(...e): T }
+@Component()
+export class DatabaseService {
+
+    /**
+     * 
+     * 
+     * @private
+     * @type {Connection}
+     * @memberof DatabaseService
+     */
+    private _connection: Connection;
 
     /**
      * Creates an instance of DatabaseService.
-     * @param {TypeOrmDatabaseService} databaseService 
-     * @param {{ new(...e): T }} entity 
      * @memberof DatabaseService
      */
-    constructor(databaseService: TypeOrmDatabaseService, entity: { new(...e): T }) {
-        this.databaseService = databaseService;
-        this.entity = entity;
+    constructor() { }
+
+    /**
+     * 
+     * 
+     * @readonly
+     * @private
+     * @type {Promise<Connection>}
+     * @memberof DatabaseService
+     */
+    private get connection(): Promise<Connection> {
+        if (this._connection) return Promise.resolve(this._connection);
+        return createConnection().then(connection => {
+            this._connection = connection;
+            return connection;
+        }).catch(error => {
+            console.log(this._connection);
+            throw error;
+        });
     }
 
-    public get repository(): Promise<Repository<T>> {
-        return this.databaseService.getRepository<T>(this.entity);
+    /**
+     * 
+     * 
+     * @returns {Promise<EntityManager>} 
+     * @memberof DatabaseService
+     */
+    public async getEntityManager(): Promise<EntityManager> {
+        return (await this.connection).manager;
     }
 
-    public async add(entity: T): Promise<T> {
-        return (await this.repository).save(entity);
-
-    }
-
-    public async addAll(entitys: T[]): Promise<T[]> {
-        return (await this.repository).save(entitys);
-    }
-
-    public async getAll(): Promise<T[]> {
-        return (await this.repository).find();
-    }
-
-    public async get(id: number): Promise<T> {
-        return (await this.repository).findOneById(id);
-    }
-
-    public async update(entity: T): Promise<T> {
-        // return (await this.repository).update(user);
-        return await entity;
-    }
-
-    public async remove(entity: T): Promise<T> {
-        return (await this.repository).remove(entity);
+    /**
+     * 
+     * 
+     * @template T 
+     * @param {(ObjectType<T> | string)} entityClassOrName 
+     * @returns {Promise<Repository<T>>} 
+     * @memberof DatabaseService
+     */
+    public async getRepository<T>(entityClassOrName: ObjectType<T> | string): Promise<Repository<T>> {
+        return (await this.connection).getRepository<T>(entityClassOrName);
     }
 }

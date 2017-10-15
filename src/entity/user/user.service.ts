@@ -2,22 +2,27 @@ import { Component } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { IService } from '../../common/database/interface/service.interface';
-import { TypeOrmDatabaseService } from '../../common/database/typeOrm.database.service';
 import { DatabaseService } from '../../common/database/database.service';
+import { BaseService } from '../../common/database/base.service';
 
 @Component()
-export class UserSercvice extends DatabaseService<User>{
+export class UserSercvice extends BaseService<User>{
 
     /**
      * Creates an instance of UserSercvice.
-     * @param {TypeOrmDatabaseService} _databaseService 
      * @memberof UserSercvice
      */
-    constructor(private _databaseService: TypeOrmDatabaseService) {
-        super(_databaseService, User);
+    constructor() {
+        super(User);
         this.seed();
     }
 
+    /**
+     * 
+     * 
+     * @private
+     * @memberof UserSercvice
+     */
     private async seed() {
         const user = await this.repository;
         let count = await user.count();
